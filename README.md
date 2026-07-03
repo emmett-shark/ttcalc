@@ -1,1 +1,1 @@
-"# ttcalc" 
+# ttcalc
