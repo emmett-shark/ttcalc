@@ -1,0 +1,35 @@
+body {
+    font-family: Open Sans,Arial;
+    color: #454545;
+    font-size: 16px;
+    margin: 2em auto;
+    max-width: 800px;
+    padding: 1em;
+}
+
+div {
+    margin:1em auto;
+}
+
+input {
+    border-radius: 2px;
+    border: 1px solid #bbb;
+    color: #454545;
+}
+
+input:hover {
+    border: 1px solid #777;
+}
+
+input[type="submit"] {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+input[type="submit"]:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0069d9;
+    cursor: pointer;
+}

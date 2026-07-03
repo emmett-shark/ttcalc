@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="custom.css" />
+    </head>
+    <body>
+        <h1>TT Calculator</h1>
+        <div>
+            <form>
+                <label for="profile-id">id:</label>
+                <input type="number" name="profile-id" id="profile-id" />
+                <input type="submit" value="update" id="update" />
+            </form>
+        </div>
+        <div>
+            Total TT: <span id="tt"></span>
+        </div>
+        <div>
+            <label for="score" >Raw TT:</label>
+            <input type="number" name="score" id="score" onkeyup="calculate()">
+        </div>
+        <div id="result">
+            A new <span id="raw"></span> TT score will give <b><span id="weighted"></span></b> weighted TT for id <span id="current-id"></span>
+        </div>
+    </body>
+</html>
+<script type="text/javascript" src="a.js"></script>
