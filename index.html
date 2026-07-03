@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <link type="text/css" rel="stylesheet" href="custom.css" />
@@ -6,20 +7,25 @@
         <h1>TT Calculator</h1>
         <div>
             <form>
-                <label for="profile-id">id:</label>
+                <label for="profile-id">Profile id:</label>
                 <input type="number" name="profile-id" id="profile-id" />
-                <input type="submit" value="update" id="update" />
+                <input type="submit" value="search" id="search" />
             </form>
         </div>
         <div>
-            Total TT: <span id="tt"></span>
+            Total tt: <code><span id="tt"></span></code>
         </div>
+        <hr />
         <div>
-            <label for="score" >Raw TT:</label>
+            <label for="score" >Raw tt:</label>
             <input type="number" name="score" id="score" onkeyup="calculate()">
         </div>
+        <div>
+            <label for="chart-id" >Chart id:</label>
+            <input type="number" name="chart-id" id="chart-id" onkeyup="calculate()">
+        </div>
         <div id="result">
-            A new <span id="raw"></span> TT score will give <b><span id="weighted"></span></b> weighted TT for id <span id="current-id"></span>
+            A new <span id="raw"></span> tt<span id="song-text"></span> will give <b><span id="weighted-tt"></span></b> weighted tt for id <span id="current-id"></span> <code>(<span id="new-tt"></span> tt)</code>
         </div>
     </body>
 </html>

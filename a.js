@@ -1,16 +1,17 @@
 let scores = [];
+let tt = 0;
 
 document.getElementById("result").style.visibility = "hidden";
 loadData();
 
-document.getElementById("update").addEventListener("click", async (event) => {
+document.getElementById("search").addEventListener("click", async (event) => {
   loadData(event);
 });
 
 async function loadData(event) {
   event?.preventDefault();
   let id = document.getElementById("profile-id").value;
-  if (!id || !!isNaN(id)) {
+  if (!id || !!isNaN(id)) { // if not numeric
     return;
   }
   document.getElementById("tt").innerHTML = "⏳";
@@ -19,8 +20,9 @@ async function loadData(event) {
   try {
     let response = await fetch(`https://toottally.com/api/profile/${id}/best_scores/?page_size=300`);
     let data = await response.json();
-    scores = data.results.map((x) => x.tt);
-    document.getElementById("tt").innerHTML = getTT(scores).toFixed(5);
+    scores = data.results;
+    tt = getTT(scores.map((x) => x.tt));
+    document.getElementById("tt").innerHTML = tt.toFixed(5);
     document.getElementById("result").style.visibility = "visible";
     calculate();
   } catch(error) {
@@ -31,28 +33,49 @@ async function loadData(event) {
 
 function calculate() {
   let raw = Number(document.getElementById("score").value);
+  let chartId = Number(document.getElementById("chart-id").value);
+
   document.getElementById("raw").innerHTML = raw;
-  document.getElementById("weighted").innerHTML = getWeighted(raw, scores).toFixed(5);
+  let scoreIndex =  scores.findIndex((x) => x.song_id === chartId);
+  let newTT = 0;
+  if (scoreIndex >= 0) {
+    document.getElementById("song-text").innerHTML = ` for ${scores[scoreIndex].song_name}`;
+    newTT = replacedScoreTotalTT(raw, scoreIndex);
+  } else {
+    document.getElementById("song-text").innerHTML = "";
+    newTT = newScoreTotalTT(raw);
+  }
+  document.getElementById("weighted-tt").innerHTML = (newTT - tt).toFixed(5);
+  document.getElementById("new-tt").innerHTML = newTT.toFixed(5);
 }
 
-function getIndex(score, arr) {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] < score) {
+function replacedScoreTotalTT(score, scoreIndex) {
+  if (score <= scores[scoreIndex].tt) return tt;
+  let copiedNumbers = scores.toSpliced().map((x) => x.tt);
+  copiedNumbers[scoreIndex] = score;
+  copiedNumbers.sort((a, b) => b - a);
+  return getTT(copiedNumbers);
+}
+
+function getIndex(score) {
+  for (let i = 0; i < scores.length; i++) {
+    if (scores[i].tt < score) {
       return i;
     }
   }
-  return arr.length;
+  return scores.length;
 }
 
-function getWeighted(score, arr) {
-  let copy = arr.toSpliced();
-  let i = getIndex(score, arr);
+function newScoreTotalTT(score) {
+  let copy = scores.toSpliced();
+  let i = getIndex(score, scores);
   if (i >= copy.length) {
-    return 0;
+    return tt;
   }
-  copy.splice(i, 0, score);
-  if (copy.length > 300) copy.pop();
-  return getTT(copy) - getTT(arr);
+  let copiedNumbers = copy.map((x) => x.tt);
+  copiedNumbers.splice(i, 0, score);
+  if (copiedNumbers.length > 300) copiedNumbers.pop();
+  return getTT(copiedNumbers);
 }
 
 function getTT(arr) {

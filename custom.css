@@ -1,7 +1,8 @@
 body {
     font-family: Open Sans,Arial;
-    color: #454545;
-    font-size: 16px;
+    color: #ddd;
+    background-color: #222;
+    font-size: 20px;
     margin: 2em auto;
     max-width: 800px;
     padding: 1em;
@@ -12,13 +13,19 @@ div {
 }
 
 input {
-    border-radius: 2px;
-    border: 1px solid #bbb;
-    color: #454545;
+    border-radius: 3px;
+    border: 1px solid #777;
+    color: #fff;
+    background-color: #444;
+    font-size: 20px;
 }
 
 input:hover {
-    border: 1px solid #777;
+    border: 1px solid #bbb;
+}
+
+input:focus-visible {
+    outline: 2px solid #007bff;
 }
 
 input[type="submit"] {
@@ -32,4 +39,8 @@ input[type="submit"]:hover {
     background-color: #0069d9;
     border-color: #0069d9;
     cursor: pointer;
+}
+
+input[type="submit"]:focus-visible {
+    outline-color: #fff;
 }
